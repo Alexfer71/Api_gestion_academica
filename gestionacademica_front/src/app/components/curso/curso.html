@@ -1,2 +1,26 @@
-<h2>Curso</h2>
-<p>Abre la consola (F12) para ver los datos.</p>
+<h2>Cursos</h2>
+
+<form (ngSubmit)="guardar()">
+  <input
+    name="descripcion"
+    [(ngModel)]="nuevo.descripcionCurso"
+    placeholder="Descripción del curso"
+    required
+  />
+
+  <select name="estado" [(ngModel)]="nuevo.estadoCurso">
+    <option value="ACTIVO">ACTIVO</option>
+    <option value="INACTIVO">INACTIVO</option>
+  </select>
+
+  <button type="submit">Registrar</button>
+</form>
+
+<hr />
+
+<ul>
+  <li *ngFor="let c of cursos">
+    {{ c.idCurso }} - {{ c.descripcionCurso }} ({{ c.estadoCurso }})
+    <button (click)="borrar(c.idCurso)">Eliminar</button>
+  </li>
+</ul>
