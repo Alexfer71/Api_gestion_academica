@@ -20,4 +20,8 @@ export class cursoService {
   eliminar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`);
   }
+  
+  actualizar(id: number, c: Curso): Observable<Curso> {
+  return this.http.put<Curso>(`${this.url}/${id}`, c);
+}
 }

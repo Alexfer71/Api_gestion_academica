@@ -55,4 +55,15 @@ export class CursoComponent implements OnInit {
   if (!ok) return;
   this.eliminar(id);
   }
+  simularUpdate(c: Curso): void {
+  const actualizado: Curso = {
+    ...c,
+    estadoCurso: c.estadoCurso === 'ACTIVO' ? 'INACTIVO' : 'ACTIVO'
+  };
+
+  this.cursoService.actualizar(c.idCurso!, actualizado).subscribe({
+    next: () => this.cargar(),
+    error: (e: any) => console.log(e),
+  });
+}
 }
