@@ -1,26 +1,79 @@
-<h2>Cursos</h2>
+<div class="page">
+  <header class="header">
+    <h1>Cursos</h1>
+    <p class="subtitle">Gestión de cursos (listar, registrar y eliminar)</p>
+  </header>
 
-<form (ngSubmit)="guardar()">
-  <input
-    name="descripcion"
-    [(ngModel)]="nuevo.descripcionCurso"
-    placeholder="Descripción del curso"
-    required
-  />
+  <section class="card">
+    <h2 class="card-title">Registrar curso</h2>
 
-  <select name="estado" [(ngModel)]="nuevo.estadoCurso">
-    <option value="ACTIVO">ACTIVO</option>
-    <option value="INACTIVO">INACTIVO</option>
-  </select>
+    <form class="form" (ngSubmit)="guardar()">
+      <div class="field">
+        <label>Descripción</label>
+        <input
+          type="text"
+          name="descripcion"
+          [(ngModel)]="nuevo.descripcionCurso"
+          placeholder="Ej: Programación I"
+          required
+          minlength="3"
+        />
+      </div>
 
-  <button type="submit">Registrar</button>
-</form>
+      <div class="field">
+        <label>Estado</label>
+        <select name="estado" [(ngModel)]="nuevo.estadoCurso">
+          <option value="ACTIVO">ACTIVO</option>
+          <option value="INACTIVO">INACTIVO</option>
+        </select>
+      </div>
 
-<hr />
+      <button class="btn primary" type="submit">Registrar</button>
+    </form>
+  </section>
 
-<ul>
-  <li *ngFor="let c of cursos">
-    {{ c.idCurso }} - {{ c.descripcionCurso }} ({{ c.estadoCurso }})
-    <button (click)="borrar(c.idCurso)">Eliminar</button>
-  </li>
-</ul>
+  <section class="card">
+    <div class="card-head">
+      <h2 class="card-title">Listado</h2>
+      <div class="meta">
+        <span class="pill">Total: {{ cursos.length }}</span>
+        <button class="btn ghost" type="button" (click)="cargar()">Refrescar</button>
+      </div>
+    </div>
+
+    <div *ngIf="cursos.length === 0" class="empty">
+      <p>No hay cursos registrados.</p>
+      <small>Registra uno usando el formulario de arriba.</small>
+    </div>
+
+    <div *ngIf="cursos.length > 0" class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width: 90px;">ID</th>
+            <th>Descripción</th>
+            <th style="width: 140px;">Estado</th>
+            <th style="width: 140px; text-align:right;">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let c of cursos">
+            <td class="mono">{{ c.idCurso }}</td>
+            <td>{{ c.descripcionCurso }}</td>
+            <td>
+              <span class="status" [class.inactivo]="c.estadoCurso !== 'ACTIVO'">
+                {{ c.estadoCurso }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="btn danger" type="button" (click)="confirmarEliminar(c.idCurso)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

@@ -49,4 +49,10 @@ export class CursoComponent implements OnInit {
       error: (e: any) => console.log(e),
     });
   }
+  
+  confirmarEliminar(id: number): void {
+  const ok = confirm('¿Seguro que deseas eliminar este curso?');
+  if (!ok) return;
+  this.eliminar(id);
+  }
 }
